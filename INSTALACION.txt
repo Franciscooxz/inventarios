@@ -1,0 +1,9 @@
+1- Mover la carpeta INVENTARIO: Primero, copia o mueve la carpeta "INVENTARIO" a tu servidor local o remoto. Esto asegurará que los archivos del sistema estén accesibles para su ejecución.
+
+2- Crear la base de datos MySQL: Utiliza un cliente de MySQL como phpMyAdmin u otro gestor gráfico que prefieras. Crea una nueva base de datos con el nombre que elijas. Luego, selecciona esta base de datos e importa la base de datos del sistema. El archivo de la base de datos se encuentra en la carpeta "DB" dentro de la carpeta "INVENTARIO". Esta importación establecerá las tablas y la estructura necesaria para el sistema.
+
+3- Configurar el archivo main.php: Abre el archivo "main.php" con tu editor de código favorito. Dentro de este archivo, busca la función "conexion" que se encarga de la conexión a la base de datos. En esta función, configura los datos del servidor de base de datos, como el nombre de usuario, la contraseña, el nombre de la base de datos y la dirección del servidor. Asegúrate de que estos datos coincidan con los de tu entorno de base de datos para que la conexión sea exitosa.
+
+
+4- Usuario por defecto: Administrador
+    Clave: Administrador
