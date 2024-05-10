@@ -48,6 +48,12 @@ if ($actualizar_mantenimiento->execute($marcadores)) {
     ';
 }
 
+// Calcular y guardar la próxima fecha de mantenimiento
+$proxima_fecha_mantenimiento = date('Y-m-d', strtotime('+6 months', strtotime($fecha_mantenimiento)));
+$actualizar_mantenimiento = $actualizar_mantenimiento->prepare("UPDATE producto SET proxima_fecha_mantenimiento=:proxima_fecha_mantenimiento WHERE producto_id=:id");
+$marcadores[":proxima_fecha_mantenimiento"] = $proxima_fecha_mantenimiento;
+$actualizar_mantenimiento->execute($marcadores);
+
 $actualizar_mantenimiento = null; // Cerramos la conexión
 
 /*== Mostrando información del producto ==*/
@@ -68,11 +74,10 @@ echo '          </figure>
                 <p class="title is-4">' . $datos['producto_nombre'] . '</p>
                 <p class="subtitle is-6"><strong>Código:</strong> ' . $datos['producto_codigo'] . '</p>
                 <p class="subtitle is-6"><strong>Precio:</strong> $' . $datos['producto_precio'] . '</p>
-                <p class="subtitle is
-
- -6"><strong>Stock:</strong> ' . $datos['producto_stock'] . '</p>
+                <p class="subtitle is-6"><strong>Stock:</strong> ' . $datos['producto_stock'] . '</p>
                 <p class="subtitle is-6"><strong>Categoría:</strong> ' . obtener_categoria($datos['categoria_id']) . '</p>
                 <p class="subtitle is-6"><strong>Última fecha de mantenimiento:</strong> ' . $datos['ultima_fecha_mantenimiento'] . '</p>
+                <p class="subtitle is-6"><strong>Próxima fecha de mantenimiento:</strong> ' . $proxima_fecha_mantenimiento . '</p>
             </div>
         </div>
     </div>
