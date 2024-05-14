@@ -23,7 +23,7 @@
     $Npaginas =ceil($total/$registros);
 
     if($total>=1 && $pagina<=$Npaginas){
-        $contador=$inicio+1;
+        $contador=$inicio+1;<
         $pag_inicio=$inicio+1;
         foreach($datos as $rows){
             $tabla.='
