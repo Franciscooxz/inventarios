@@ -33,7 +33,7 @@
                 <tr class="has-text-centered">
                 	<th>#</th>
                     <th>Nombre</th>
-                    <th>Ubicacion</th>
+                    <th>Ubicación</th>
                     <th>Productos</th>
                     <th colspan="2">Opciones</th>
                 </tr>
