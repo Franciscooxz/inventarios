@@ -20,7 +20,6 @@
         include "./inc/navbar.php";
 
         // Incluir las notificaciones aquí
-        require_once "notificaciones.php";
 
         include "./vistas/" . $_GET['vista'] . ".php";
         include "./inc/script.php";

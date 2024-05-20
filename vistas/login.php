@@ -1,7 +1,7 @@
 <div class="main-container">
 
 	<form class="box login" action="" method="POST" autocomplete="off">
-		<h5 class="title is-5 has-text-centered is-uppercase">Sistema de inventario</h5>
+		<h5 class="title is-5 has-text-centered is-uppercase">Inventario Chinchilla</h5>
 
 		<div class="field">
 			<label class="label">Usuario</label>
@@ -18,7 +18,7 @@
 		</div>
 
 		<p class="has-text-centered mb-4 mt-3">
-			<button type="submit" class="button is-info is-rounded">Iniciar sesion</button>
+			<button type="submit" class="button is-info is-rounded">Ingresar</button>
 		</p>
 
 		<?php
