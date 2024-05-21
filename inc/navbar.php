@@ -46,7 +46,19 @@
                 </div>
             </div>
 
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">Mantenimientos</a>
+
+                <div class="navbar-dropdown">
+                    <a href="index.php?vista=product_reports" class="navbar-item">Reportes</a>
+                    <a href="index.php?vista=product_maintenance" class="navbar-item">Mantenimientos</a>
+                </div>
+            </div>
+
         </div>
+
+
+    
 
         <div class="navbar-end">
             <div class="navbar-item">
@@ -56,7 +68,7 @@
                     </a>
 
                     <a href="index.php?vista=logout" class="button is-link is-rounded">
-                        Salir
+                        Cerrar Sesion
                     </a>
                 </div>
             </div>
