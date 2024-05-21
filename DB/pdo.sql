@@ -43,6 +43,7 @@ CREATE TABLE `producto` (
   `producto_id` int(20) NOT NULL,
   `producto_nombre` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_stock` int(25) NOT NULL,
+  `producto_descripcion` text COLLATE utf8_spanish2_ci,
   `producto_foto` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria_id` int(7) NOT NULL,
   `usuario_id` int(10) NOT NULL
