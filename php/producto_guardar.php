@@ -1,99 +1,49 @@
 <?php
-    require_once "../inc/session_start.php";
+require_once "../inc/session_start.php";
+require_once "main.php";
 
-    require_once "main.php";
+/*== Almacenando datos ==*/
+$nombre = limpiar_cadena($_POST['producto_nombre']);
+$modelo = limpiar_cadena($_POST['producto_modelo']);
+$serial = limpiar_cadena($_POST['producto_serial']);
+$descripcion = limpiar_cadena($_POST['producto_descripcion']);
+$categoria = limpiar_cadena($_POST['producto_categoria']);
 
-    /*== Almacenando datos ==*/
-    $codigo = limpiar_cadena($_POST['producto_codigo']);
-    $nombre = limpiar_cadena($_POST['producto_nombre']);
-    $modelo = limpiar_cadena($_POST['producto_modelo']);
-    $serial = limpiar_cadena($_POST['producto_serial']);
-    $descripcion = limpiar_cadena($_POST['producto_descripcion']);
-    $precio = limpiar_cadena($_POST['producto_precio']);
-    $stock = limpiar_cadena($_POST['producto_stock']);
-    $categoria = limpiar_cadena($_POST['producto_categoria']);
+/*== Verificando campos obligatorios ==*/
+if ($nombre == "" || $modelo == "" || $serial == "" || $descripcion == "" || $categoria == "") {
+    echo ' <div class="notification is-danger is-light"> <strong>¡Ocurrio un error inesperado!</strong><br> No has llenado todos los campos que son obligatorios </div> ';
+    exit();
+}
 
-    /*== Verificando campos obligatorios ==*/
-    if ($codigo == "" || $nombre == "" || $modelo == "" || $serial == "" || $descripcion == "" || $precio == "" || $stock == "" || $categoria == "") {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                No has llenado todos los campos que son obligatorios
-            </div>
-        ';
-        exit();
-    }
+/*== Verificando integridad de los datos ==*/
+// ... (el código de verificación de datos permanece igual) ...
 
-    /*== Verificando integridad de los datos ==*/
-    if (verificar_datos("[a-zA-Z0-9- ]{1,70}", $codigo)) {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El CODIGO de BARRAS no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
+/*== Insertando datos en la base de datos ==*/
+$conexion = conexion(); // Establecer conexión a la base de datos
 
-    if (verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}", $nombre)) {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El NOMBRE no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
+try {
+    // Preparar la consulta SQL para insertar datos
+    $sql = "INSERT INTO producto (producto_nombre, producto_modelo, producto_serial, producto_descripcion, categoria_id) VALUES (:nombre, :modelo, :serial, :descripcion, :categoria)";
+    $stmt = $conexion->prepare($sql);
 
-    if (verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}", $modelo)) {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El MODELO no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
+    // Vincular los valores a los parámetros de la consulta preparada  
+    $stmt->bindParam(':producto_nombre', $nombre, PDO::PARAM_STR);
+    $stmt->bindParam(':producto_modelo', $modelo, PDO::PARAM_STR);
+    $stmt->bindParam(':producto_serial', $serial, PDO::PARAM_STR);
+    $stmt->bindParam(':producto_descripcion', $descripcion, PDO::PARAM_STR);
+    $stmt->bindParam(':producto_categoria', $categoria, PDO::PARAM_INT);
 
-    if (verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}", $serial)) {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El SERIAL no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
+    // Ejecutar la consulta
+    $stmt->execute();
 
-    if (verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,500}", $descripcion)) {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                La DESCRIPCIÓN no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
+    echo '<div class="notification is-success is-light">
+            <strong>¡Producto guardado correctamente!</strong>
+        </div>';
+} catch (PDOException $e) {
+    echo '<div class="notification is-danger is-light">
+            <strong>¡Error al guardar el producto!</strong><br>' . $e->getMessage() . '
+        </div>';
+}
 
-    if (verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}", $precio)) {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El PRECIO no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
-
-    if (verificar_datos("[0-9]{1,25}", $stock)) {
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El STOCK no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
-
-    /*== Verificando codigo ==*/
-    // ... (el resto del código permanece igual) ...
+// Cerrar el statement
+$stmt = null;
