@@ -11,7 +11,6 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -36,19 +35,40 @@ CREATE TABLE `categoria` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `ciudades`
+--
+
+CREATE TABLE `ciudades` (
+  `ciudad_id` int(7) NOT NULL AUTO_INCREMENT,
+  `ciudad_nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`ciudad_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `producto`
 --
 
--- Estructura de tabla para la tabla `producto`
 CREATE TABLE `producto` (
-  `producto_id` int(20) NOT NULL,
+  `producto_id` int(20) NOT NULL AUTO_INCREMENT,
+  `producto_codigo` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_nombre` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_descripcion` text COLLATE utf8_spanish2_ci,
   `producto_modelo` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_serial` varchar(70) COLLATE utf8_spanish2_ci NOT NULL,
   `producto_foto` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria_id` int(7) NOT NULL,
-  `usuario_id` int(10) NOT NULL
+  `usuario_id` int(10) NOT NULL,
+  `producto_ubicacion` int(7) NOT NULL,
+  `producto_estado` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY (`producto_id`),
+  KEY `categoria_id` (`categoria_id`),
+  KEY `usuario_id` (`usuario_id`),
+  KEY `producto_ubicacion` (`producto_ubicacion`),
+  CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`categoria_id`),
+  CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`),
+  CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`producto_ubicacion`) REFERENCES `ciudades` (`ciudad_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -89,7 +109,8 @@ ALTER TABLE `categoria`
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`producto_id`),
   ADD KEY `categoria_id` (`categoria_id`),
-  ADD KEY `usuario_id` (`usuario_id`);
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `producto_ubicacion` (`producto_ubicacion`);
 
 --
 -- Indices de la tabla `usuario`
@@ -128,7 +149,8 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`categoria_id`),
-  ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`);
+  ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`usuario_id`),
+  ADD CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`producto_ubicacion`) REFERENCES `ciudades` (`ciudad_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
