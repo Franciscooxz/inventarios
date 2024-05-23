@@ -32,6 +32,3 @@
         require_once "./php/producto_lista.php";
     ?>
 </div>
-
-<!-- Modificación implementada mantenimientos -->
-<a href="index.php?vista=product_maintenance&product_id=<?php echo $rows['producto_id']; ?>" class="button is-warning is-rounded is-small">Mantenimiento</a>
