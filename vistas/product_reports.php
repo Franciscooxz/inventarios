@@ -5,7 +5,19 @@
 
 <div class="container pb-6 pt-6">
     <?php
-        require_once "./php/main.php";
+    // Verifica el estado de la sesión antes de intentar iniciarla
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Verifica si hay una sesión activa
+    if (!isset($_SESSION['id'])) {
+        // Si no hay sesión activa, redirigir al inicio de sesión
+        header("Location: index.php?vista=login");
+        exit();
+    }
+
+    require_once "./php/main.php";
     ?>
 
     <div class="columns">
@@ -20,21 +32,21 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">Categoría</label>
+                    <label class="label">Producto</label>
                     <div class="control">
                         <div class="select is-rounded">
-                            <select name="categoria_id">
-                                <option value="">Todas las categorías</option>
+                            <select name="producto_id">
+                                <option value="">Todos los productos</option>
                                 <?php
-                                    $categorias = conexion();
-                                    $categorias = $categorias->query("SELECT * FROM categoria");
-                                    if ($categorias->rowCount() > 0) {
-                                        $categorias = $categorias->fetchAll();
-                                        foreach ($categorias as $row) {
-                                            echo '<option value="' . $row['categoria_id'] . '">' . $row['categoria_nombre'] . '</option>';
-                                        }
+                                $productos = conexion();
+                                $productos = $productos->query("SELECT * FROM producto");
+                                if ($productos->rowCount() > 0) {
+                                    $productos = $productos->fetchAll();
+                                    foreach ($productos as $row) {
+                                        echo '<option value="' . $row['producto_id'] . '">' . $row['producto_nombre'] . '</option>';
                                     }
-                                    $categorias = null;
+                                }
+                                $productos = null;
                                 ?>
                             </select>
                         </div>
@@ -49,13 +61,12 @@
         </div>
         <div class="column">
             <?php
-                if (isset($_GET['fecha_inicio']) && isset($_GET['fecha_fin'])) {
-                    $fecha_inicio = $_GET['fecha_inicio'];
-                    $fecha_fin = $_GET['fecha_fin'];
-                    $categoria_id = isset($_GET['categoria_id']) ? $_GET['categoria_id'] : 0;
-
-                    require_once "./php/producto_reporte.php";
-                }
+            if (isset($_GET['fecha_inicio']) && isset($_GET['fecha_fin'])) {
+                $fecha_inicio = $_GET['fecha_inicio'];
+                $fecha_fin = $_GET['fecha_fin'];
+                $producto_id = isset($_GET['producto_id']) ? $_GET['producto_id'] : 0;
+                require_once "./php/producto_reporte.php";
+            }
             ?>
         </div>
     </div>

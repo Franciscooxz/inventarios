@@ -15,11 +15,47 @@
 
     if ($check_producto->rowCount() > 0) {
         $datos = $check_producto->fetch();
-        require_once "./php/productomantenimiento.php";
+        ?>
+        <div class="card">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-128x128">
+                            <?php
+                            if (is_file("./img/producto/" . $datos['producto_foto'])) {
+                                echo '<img src="./img/producto/' . $datos['producto_foto'] . '">';
+                            } else {
+                                echo '<img src="./img/producto.png">';
+                            }
+                            ?>
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4"><?php echo $datos['producto_nombre']; ?></p>
+                        <p class="subtitle is-6"><strong>Código:</strong> <?php echo $datos['producto_codigo']; ?></p>
+                        <p class="subtitle is-6"><strong>Próxima fecha de mantenimiento:</strong> <?php echo $datos['proxima_fecha_mantenimiento']; ?></p>
+                    </div>
+                </div>
+                <form method="post" action="./php/producto_mantenimiento.php?product_id=<?php echo $id; ?>">
+                    <div class="field">
+                        <label class="label">Nueva fecha de mantenimiento</label>
+                        <div class="control">
+                            <input class="input" type="date" name="nueva_fecha_mantenimiento" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Actualizar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <?php
     } else {
         echo '<div class="notification is-warning is-light">
                 <strong>No hay mantenimientos disponibles</strong><br>
-                En este momento no se han registrado mantenimientos para este producto.
+                En este momento no se han registrado mantenimientos.
               </div>';
     }
     $check_producto = null;

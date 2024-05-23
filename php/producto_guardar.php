@@ -9,7 +9,7 @@ $modelo = limpiar_cadena($_POST['producto_modelo']);
 $serial = limpiar_cadena($_POST['producto_serial']);
 $descripcion = limpiar_cadena($_POST['producto_descripcion']);
 $categoria = limpiar_cadena($_POST['producto_categoria']);
-$ubicacion = limpiar_cadena($_POST['producto_ubicacion']);
+$ubicacion = isset($_POST['producto_ubicacion']) ? limpiar_cadena($_POST['producto_ubicacion']) : "";
 $estado = limpiar_cadena($_POST['producto_estado']);
 
 /*== Verificando campos obligatorios ==*/
@@ -92,9 +92,11 @@ $check_ubicacion = null;
 $img_dir = '../img/producto/';
 
 /*== Comprobando si se ha seleccionado una imagen ==*/
+$foto = '';  // Inicializar $foto como una cadena vacía
 if ($_FILES['producto_foto']['name'] != "" && $_FILES['producto_foto']['size'] > 0) {
     // Código para manejar la imagen
     // ...
+    // Asignar el nombre de la imagen a $foto después de subirla
 }
 
 /*== Guardando datos ==*/
@@ -124,7 +126,7 @@ if ($guardar_producto->rowCount() == 1) {
         </div>
     ';
 } else {
-    if (is_file($img_dir . $foto)) {
+    if (!empty($foto) && is_file($img_dir . $foto)) {
         chmod($img_dir . $foto, 0777);
         unlink($img_dir . $foto);
     }

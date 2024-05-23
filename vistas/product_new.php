@@ -93,6 +93,27 @@
                     </label>
                 </div>
             </div>
+
+            <div class="column">
+                <label>Ubicación</label><br>
+                <div class="select is-rounded">
+                    <select name="producto_ubicacion">
+                        <option value="" selected>Seleccione una opción</option>
+                        <?php
+                        $ciudades = conexion();
+                        $ciudades = $ciudades->query("SELECT * FROM ciudades");
+                        if ($ciudades->rowCount() > 0) {
+                            $ciudades = $ciudades->fetchAll();
+                            foreach ($ciudades as $row) {
+                                echo '<option value="' . $row['ciudad_id'] . '">' . $row['ciudad_nombre'] . '</option>';
+                            }
+                        }
+                        $ciudades = null;
+                        ?>
+                    </select>
+                </div>
+            </div>
+
         </div>
 
         <p class="has-text-centered">
