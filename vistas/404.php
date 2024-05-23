@@ -5,7 +5,7 @@
 		      Error 404
 		    </p>
 		    <p class="subtitle">
-		      Pafina no encontrada
+		      Pagina no encontrada
 		    </p>
 	  	</div>
 	</section>
