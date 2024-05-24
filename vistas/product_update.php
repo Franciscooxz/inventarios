@@ -34,7 +34,7 @@
         <div class="columns">
             <div class="column">
                 <div class="control">
-                    <label>Id Producto</label>
+                    <label>Codigo de Barras</label>
                     <input class="input" type="text" name="producto_codigo" pattern="^[a-zA-Z0-9- ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_codigo']; ?>">
                 </div>
             </div>
@@ -89,15 +89,35 @@
                 </div>
             </div>
             <div class="column">
-                <div class="control">
-                    <label>Ubicación</label>
-                    <input class="input" type="text" name="producto_ubicacion" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_ubicacion']; ?>">
+                <label>Ubicación</label><br>
+                <div class="select is-rounded">
+                    <select name="producto_ubicacion">
+                        <option value="" selected>Seleccione una opción</option>
+                        <?php
+                        $ciudades = conexion();
+                        $ciudades = $ciudades->query("SELECT * FROM ciudades");
+                        if ($ciudades->rowCount() > 0) {
+                            $ciudades = $ciudades->fetchAll();
+                            foreach ($ciudades as $row) {
+                                echo '<option value="' . $row['ciudad_id'] . '">' . $row['ciudad_nombre'] . '</option>';
+                            }
+                        }
+                        $ciudades = null;
+                        ?>
+                    </select>
                 </div>
             </div>
+            </div>
+            <div class="columns">
             <div class="column">
-                <div class="control">
-                    <label>Estado</label>
-                    <input class="input" type="text" name="producto_estado" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_estado']; ?>">
+                <label>Estado</label><br>
+                <div class="select is-rounded">
+                    <select name="producto_estado">
+                        <option value="" selected>Seleccione una opción</option>
+                        <option value="Buen estado">Buen estado</option>
+                        <option value="Mal estado">Mal estado</option>
+                        <option value="En mantenimiento">En mantenimiento</option>
+                    </select>
                 </div>
             </div>
         </div>

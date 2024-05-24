@@ -15,7 +15,7 @@
 
     if ($check_producto->rowCount() > 0) {
         $datos = $check_producto->fetch();
-        ?>
+    ?>
         <div class="card">
             <div class="card-content">
                 <div class="media">
@@ -51,13 +51,10 @@
                 </form>
             </div>
         </div>
-        <?php
+    <?php
     } else {
-        echo '<div class="notification is-warning is-light">
-                <strong>No hay mantenimientos disponibles</strong><br>
-                En este momento no se han registrado mantenimientos.
-              </div>';
+        echo '<div class="notification is-warning is-light"> <strong>No hay mantenimientos disponibles</strong><br> En este momento no se han registrado mantenimientos. </div>';
     }
     $check_producto = null;
     ?>
-</div>
+</div>      
