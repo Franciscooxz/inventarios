@@ -6,15 +6,14 @@
 		return $pdo;
 	}
 
-
-	# Verificar datos # 
+	# Verificar datos #
 	function verificar_datos($filtro,$cadena){
 		if(preg_match("/^".$filtro."$/", $cadena)){
 			return false;
-        }else{
-            return true;
         }
 	}
+
+
 
 
 	# Limpiar cadenas de texto #

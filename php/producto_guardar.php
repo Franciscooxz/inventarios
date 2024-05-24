@@ -24,7 +24,7 @@ if ($codigo == "" || $nombre == "" || $modelo == "" || $serial == "" || $descrip
 }
 
 /*== Verificando integridad de los datos ==*/
-if (verificar_datos("[a-zA-Z0-9- ]{1,70}", $codigo)) {
+if (verificar_datos("/^[a-zA-Z0-9- ]{1,70}$/", $codigo)) {
     echo '
         <div class="notification is-danger is-light">
             <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -34,7 +34,7 @@ if (verificar_datos("[a-zA-Z0-9- ]{1,70}", $codigo)) {
     exit();
 }
 
-if (verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}", $nombre)) {
+if (verificar_datos("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$/", $nombre)) {
     echo '
         <div class="notification is-danger is-light">
             <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -44,11 +44,52 @@ if (verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}", $nom
     exit();
 }
 
-// Agrega aquí las validaciones para los nuevos campos: modelo, serial, descripcion, estado
+if (verificar_datos("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$/", $modelo)) {
+    echo '
+        <div class="notification is-danger is-light">
+            <strong>¡Ocurrio un error inesperado!</strong><br>
+            El MODELO no coincide con el formato solicitado
+        </div>
+    ';
+    exit();
+}
+
+if (verificar_datos("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$/", $serial)) {
+    echo '
+        <div class="notification is-danger is-light">
+            <strong>¡Ocurrio un error inesperado!</strong><br>
+            El SERIAL no coincide con el formato solicitado
+        </div>
+    ';
+    exit();
+}
+
+if (verificar_datos("/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,500}$/", $descripcion)) {
+    echo '
+        <div class="notification is-danger is-light">
+            <strong>¡Ocurrio un error inesperado!</strong><br>
+            La DESCRIPCIÓN no coincide con el formato solicitado
+        </div>
+    ';
+    exit();
+}
+
+$estados_permitidos = ["Buen estado", "Mal estado", "En mantenimiento"];
+if (!in_array($estado, $estados_permitidos)) {
+    echo '
+        <div class="notification is-danger is-light">
+            <strong>¡Ocurrio un error inesperado!</strong><br>
+            El estado seleccionado no es válido
+        </div>
+    ';
+    exit();
+}
 
 /*== Verificando codigo ==*/
 $check_codigo = conexion();
-$check_codigo = $check_codigo->query("SELECT producto_codigo FROM producto WHERE producto_codigo='$codigo'");
+$check_codigo = $check_codigo->prepare("SELECT producto_codigo FROM producto WHERE producto_codigo=:codigo");
+$check_codigo->bindParam(':codigo', $codigo, PDO::PARAM_STR);
+$check_codigo->execute();
 if ($check_codigo->rowCount() > 0) {
     echo '
         <div class="notification is-danger is-light">
@@ -62,7 +103,9 @@ $check_codigo = null;
 
 /*== Verificando categoria ==*/
 $check_categoria = conexion();
-$check_categoria = $check_categoria->query("SELECT categoria_id FROM categoria WHERE categoria_id='$categoria'");
+$check_categoria = $check_categoria->prepare("SELECT categoria_id FROM categoria WHERE categoria_id=:categoria");
+$check_categoria->bindParam(':categoria', $categoria, PDO::PARAM_INT);
+$check_categoria->execute();
 if ($check_categoria->rowCount() <= 0) {
     echo '
         <div class="notification is-danger is-light">
@@ -76,7 +119,9 @@ $check_categoria = null;
 
 /*== Verificando ubicacion ==*/
 $check_ubicacion = conexion();
-$check_ubicacion = $check_ubicacion->query("SELECT ciudad_id FROM ciudades WHERE ciudad_id='$ubicacion'");
+$check_ubicacion = $check_ubicacion->prepare("SELECT ciudad_id FROM ciudades WHERE ciudad_id=:ubicacion");
+$check_ubicacion->bindParam(':ubicacion', $ubicacion, PDO::PARAM_INT);
+$check_ubicacion->execute();
 if ($check_ubicacion->rowCount() <= 0) {
     echo '
         <div class="notification is-danger is-light">
@@ -92,7 +137,7 @@ $check_ubicacion = null;
 $img_dir = '../img/producto/';
 
 /*== Comprobando si se ha seleccionado una imagen ==*/
-$foto = '';  // Inicializar $foto como una cadena vacía
+$foto = ''; // Inicializar $foto como una cadena vacía
 if ($_FILES['producto_foto']['name'] != "" && $_FILES['producto_foto']['size'] > 0) {
     // Código para manejar la imagen
     // ...
@@ -123,18 +168,6 @@ if ($guardar_producto->rowCount() == 1) {
         <div class="notification is-info is-light">
             <strong>¡PRODUCTO REGISTRADO!</strong><br>
             El producto se registro con exito
-        </div>
-    ';
-} else {
-    if (!empty($foto) && is_file($img_dir . $foto)) {
-        chmod($img_dir . $foto, 0777);
-        unlink($img_dir . $foto);
-    }
-
-    echo '
-        <div class="notification is-danger is-light">
-            <strong>¡Ocurrio un error inesperado!</strong><br>
-            No se pudo registrar el producto, por favor intente nuevamente
         </div>
     ';
 }
