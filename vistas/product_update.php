@@ -34,28 +34,28 @@
         <div class="columns">
             <div class="column">
                 <div class="control">
-                    <label>Código de barra</label>
-                    <input class="input" type="text" name="producto_codigo" pattern="[a-zA-Z0-9- ]{1,70}" maxlength="70" required value="<?php echo $datos['producto_codigo']; ?>">
+                    <label>Id Producto</label>
+                    <input class="input" type="text" name="producto_codigo" pattern="^[a-zA-Z0-9- ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_codigo']; ?>">
                 </div>
             </div>
             <div class="column">
                 <div class="control">
                     <label>Nombre</label>
-                    <input class="input" type="text" name="producto_nombre" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}" maxlength="70" required value="<?php echo $datos['producto_nombre']; ?>">
+                    <input class="input" type="text" name="producto_nombre" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_nombre']; ?>">
                 </div>
             </div>
         </div>
         <div class="columns">
             <div class="column">
                 <div class="control">
-                    <label>Precio</label>
-                    <input class="input" type="text" name="producto_precio" pattern="[0-9.]{1,25}" maxlength="25" required value="<?php echo isset($datos['producto_precio']) ? $datos['producto_precio'] : ''; ?>">
+                    <label>Modelo</label>
+                    <input class="input" type="text" name="producto_modelo" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_modelo']; ?>">
                 </div>
             </div>
             <div class="column">
                 <div class="control">
-                    <label>Stock</label>
-                    <input class="input" type="text" name="producto_stock" pattern="[0-9]{1,25}" maxlength="25" required value="<?php echo isset($datos['producto_stock']) ? $datos['producto_stock'] : ''; ?>">
+                    <label>Serial</label>
+                    <input class="input" type="text" name="producto_serial" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_serial']; ?>">
                 </div>
             </div>
             <div class="column">
@@ -68,7 +68,7 @@
                             if ($categorias->rowCount() > 0) {
                                 $categorias = $categorias->fetchAll();
                                 foreach ($categorias as $row) {
-                                    if (isset($datos['categoria_id']) && $datos['categoria_id'] == $row['categoria_id']) {
+                                    if ($datos['categoria_id'] == $row['categoria_id']) {
                                         echo '<option value="' . $row['categoria_id'] . '" selected>' . $row['categoria_nombre'] . ' (Actual)</option>';
                                     } else {
                                         echo '<option value="' . $row['categoria_id'] . '">' . $row['categoria_nombre'] . '</option>';
@@ -81,13 +81,31 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modificación implementada -->
+        <div class="columns">
+            <div class="column">
+                <div class="control">
+                    <label>Descripción</label>
+                    <textarea class="textarea" name="producto_descripcion" maxlength="500" required><?php echo $datos['producto_descripcion']; ?></textarea>
+                </div>
+            </div>
+            <div class="column">
+                <div class="control">
+                    <label>Ubicación</label>
+                    <input class="input" type="text" name="producto_ubicacion" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_ubicacion']; ?>">
+                </div>
+            </div>
+            <div class="column">
+                <div class="control">
+                    <label>Estado</label>
+                    <input class="input" type="text" name="producto_estado" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\\/ ]{1,70}$" maxlength="70" required value="<?php echo $datos['producto_estado']; ?>">
+                </div>
+            </div>
+        </div>
         <div class="columns">
             <div class="column">
                 <div class="control">
                     <label>Última fecha de mantenimiento</label>
-                    <input class="input" type="text" name="ultima_fecha_mantenimiento" pattern="[0-9]{4}-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])" maxlength="10" required value="<?php echo isset($datos['ultima_fecha_mantenimiento']) ? $datos['ultima_fecha_mantenimiento'] : ''; ?>">
+                    <input class="input" type="date" name="ultima_fecha_mantenimiento" value="<?php echo isset($datos['ultima_fecha_mantenimiento']) ? $datos['ultima_fecha_mantenimiento'] : ''; ?>">
                 </div>
             </div>
         </div>
