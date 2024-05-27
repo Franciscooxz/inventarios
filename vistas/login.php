@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="field">
-                <label class="label">Clave</label>
+                <label class="label">Contraseña</label>
                 <div class="control">
                     <input class="input" type="password" name="login_clave" pattern="[a-zA-Z0-9$@.-]{7,100}" maxlength="100" required>
                 </div>
