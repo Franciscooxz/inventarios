@@ -1,3 +1,7 @@
+<div class="container is-fluid mb-6">
+        <h1 class="title">Productos</h1>
+        <h2 class="subtitle">Mantenimiento de productos(En proceso)</h2>
+    </div>
 
 <?php
 require_once "./php/main.php";
@@ -12,11 +16,6 @@ $check_producto = $check_producto->query("SELECT * FROM producto WHERE producto_
 if ($check_producto->rowCount() > 0) {
     $datos = $check_producto->fetch();
     ?>
-    <div class="container is-fluid mb-6">
-        <h1 class="title">Productos</h1>
-        <h2 class="subtitle">Mantenimiento de productos(En proceso)</h2>
-    </div>
-
     <div class="container pb-6 pt-6">
         <div class="card">
             <div class="card-content">
