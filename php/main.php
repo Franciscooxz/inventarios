@@ -6,11 +6,12 @@
 		return $pdo;
 	}
 
-	# Verificar datos #
-	function verificar_datos($filtro,$cadena){
-		if(preg_match("/^".$filtro."$/", $cadena)){
+	function verificar_datos($filtro, $cadena) {
+		if (preg_match($filtro, $cadena)) {
 			return false;
-        }
+		} else {
+			return true;
+		}
 	}
 
 
