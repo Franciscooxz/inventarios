@@ -29,7 +29,7 @@
 		            </div>
 		        ';
 			}else{
-				if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}",$txt)){
+				if (verificar_datos('/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{1,30}$/', $txt)) {
 			        echo '
 			            <div class="notification is-danger is-light">
 			                <strong>¡Ocurrio un error inesperado!</strong><br>

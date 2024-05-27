@@ -7,13 +7,8 @@
 	}
 
 	function verificar_datos($filtro, $cadena) {
-		if (preg_match($filtro, $cadena)) {
-			return false;
-		} else {
-			return true;
-		}
+		return !preg_match($filtro, $cadena);
 	}
-
 
 
 
