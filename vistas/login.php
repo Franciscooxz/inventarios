@@ -21,7 +21,7 @@
 		<img src="./img/logo.png">
         </div>
         <form class="box login" action="" method="POST" autocomplete="off">
-            <h5 class="title is-5 has-text-centered is-uppercase">Inventario Chinchilla</h5>
+            <h5 class="title is-5 has-text-centered is-uppercase">Inventario</h5>
             <div class="field">
                 <label class="label">Usuario</label>
                 <div class="control">
