@@ -12,6 +12,10 @@ if (!isset($_SESSION['id'])) {
     // Si no hay sesión activa, redirigir al inicio de sesión
     header("Location: index.php?vista=login");
     exit();
+} else {
+    // Si la sesión está activa, redirigir al mantenimiento
+    header("Location: producto_mantenimiento.php");
+    exit();
 }
 
 // ... resto del código ...
