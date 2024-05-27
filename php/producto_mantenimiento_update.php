@@ -29,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['mensaje'] = 'Producto no encontrado.';
     }
 
-    // Redirigir a la página de mantenimiento de productos después de la actualización
-    header('Location: producto_mantenimiento.php');
+    // Redirigir a la página anterior después de la actualización
+    $referer = $_SERVER['HTTP_REFERER'];
+    header("Location: $referer");
     exit();
 }
 ?>
-</div>

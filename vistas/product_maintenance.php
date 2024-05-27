@@ -1,21 +1,23 @@
-<div class="container is-fluid mb-6">
-    <h1 class="title">Productos</h1>
-    <h2 class="subtitle">Mantenimiento de productos</h2>
-</div>
 
-<div class="container pb-6 pt-6">
-    <?php
-    require_once "./php/main.php";
-    $id = (isset($_GET['product_id'])) ? $_GET['product_id'] : 0;
-    $id = limpiar_cadena($id);
+<?php
+require_once "./php/main.php";
 
-    /*== Verificando producto ==*/
-    $check_producto = conexion();
-    $check_producto = $check_producto->query("SELECT * FROM producto WHERE producto_id='$id'");
+$id = (isset($_GET['product_id'])) ? $_GET['product_id'] : 0;
+$id = limpiar_cadena($id);
 
-    if ($check_producto->rowCount() > 0) {
-        $datos = $check_producto->fetch();
+// Verificando producto
+$check_producto = conexion();
+$check_producto = $check_producto->query("SELECT * FROM producto WHERE producto_id='$id'");
+
+if ($check_producto->rowCount() > 0) {
+    $datos = $check_producto->fetch();
     ?>
+    <div class="container is-fluid mb-6">
+        <h1 class="title">Productos</h1>
+        <h2 class="subtitle">Mantenimiento de productos(En proceso)</h2>
+    </div>
+
+    <div class="container pb-6 pt-6">
         <div class="card">
             <div class="card-content">
                 <div class="media">
@@ -36,7 +38,7 @@
                         <p class="subtitle is-6"><strong>Próxima fecha de mantenimiento:</strong> <?php echo $datos['proxima_fecha_mantenimiento']; ?></p>
                     </div>
                 </div>
-                <form method="post" action="./php/producto_mantenimiento.php?product_id=<?php echo $id; ?>">
+                <form method="post" action="./php/producto_mantenimiento_update.php?product_id=<?php echo $id; ?>">
                     <div class="field">
                         <label class="label">Nueva fecha de mantenimiento</label>
                         <div class="control">
@@ -51,10 +53,14 @@
                 </form>
             </div>
         </div>
+    </div>
     <?php
-    } else {
-        echo '<div class="notification is-warning is-light"> <strong>No hay mantenimientos disponibles</strong><br> En este momento no se han registrado mantenimientos. </div>';
-    }
-    $check_producto = null;
-    ?>
-</div>      
+} else {
+    echo '<div class="notification is-warning is-light">
+            <strong>No hay mantenimientos disponibles</strong><br>
+            En este momento no se han registrado mantenimientos.
+          </div>';
+}
+
+$check_producto = null;
+?>
