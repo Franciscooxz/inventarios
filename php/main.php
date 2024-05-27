@@ -12,6 +12,8 @@
 
 
 
+
+
 	# Limpiar cadenas de texto #
 	function limpiar_cadena($cadena){
 		$cadena=trim($cadena);
