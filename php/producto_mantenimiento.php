@@ -30,18 +30,19 @@
                             </figure>
                         </div>
                         <div class="media-content">
-                            <p class="title is-4"><?php echo $datos['producto_nombre']; ?></p>
-                            <p class="subtitle is-6"><strong>Código:</strong> <?php echo $datos['producto_codigo']; ?></p>
-                            <p class="subtitle is-6"><strong>Próxima fecha de mantenimiento:</strong> <?php echo $datos['proxima_fecha_mantenimiento']; ?></p>
+                            <p class="title is-4"><?php echo htmlspecialchars($datos['producto_nombre']); ?></p>
+                            <p class="subtitle is-6"><strong>Código:</strong> <?php echo htmlspecialchars($datos['producto_codigo']); ?></p>
+                            <p class="subtitle is-6"><strong>Próxima fecha de mantenimiento:</strong> <?php echo htmlspecialchars($datos['proxima_fecha_mantenimiento']); ?></p>
                         </div>
                     </div>
-                    <a href="producto_mantenimiento.php?product_id=<?php echo $id; ?>" class="button is-primary">Actualizar mantenimiento</a>
+                    <a href="?vista=producto_mantenimiento&product_id=<?php echo $id; ?>" class="button is-primary">Actualizar mantenimiento</a>
                 </div>
             </div>
     <?php
         }
     } else {
-        echo '<div class="notification is-warning is-light"> <strong>No hay mantenimientos disponibles</strong><br> En este momento no se han registrado mantenimientos. </div>';
+        echo '<div class="notification is-warning is-light"> <strong>No hay mantenimientos disponibles</strong><br> En este momento no se han registrado mantenimientos. </div>'; 
+
     }
     ?>
 </div>
