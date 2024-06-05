@@ -39,28 +39,31 @@
     }
 
 
-    /*== Verificando integridad de los datos ==*/
-    if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{4,50}",$nombre)){
+/*== Verificando integridad de los datos ==*/
+$patron_nombre = "/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{4,50}$/";
+if (!preg_match($patron_nombre, $nombre)) {
+    echo '
+        <div class="notification is-danger is-light">
+            <strong>¡Ocurrio un error inesperado!</strong><br>
+            El NOMBRE no coincide con el formato solicitado
+        </div>
+    ';
+    exit();
+}
+
+
+if ($ubicacion != "") {
+    $patron_ubicacion = "/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{5,150}$/";
+    if (!preg_match($patron_ubicacion, $ubicacion)) {
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
-                El NOMBRE no coincide con el formato solicitado
+                La UBICACION no coincide con el formato solicitado
             </div>
         ';
         exit();
     }
-
-    if($ubicacion!=""){
-    	if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]{5,150}",$ubicacion)){
-	        echo '
-	            <div class="notification is-danger is-light">
-	                <strong>¡Ocurrio un error inesperado!</strong><br>
-	                La UBICACION no coincide con el formato solicitado
-	            </div>
-	        ';
-	        exit();
-	    }
-    }
+}
 
 
     /*== Verificando nombre ==*/
