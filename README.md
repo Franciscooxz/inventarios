@@ -34,6 +34,3 @@ Este es un sistema web desarrollado en PHP y MySQL que permite gestionar el inve
 - `img/`: Directorio para almacenar las imágenes de los productos.
 
 
-## Licencia
-
-Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
